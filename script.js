@@ -1,5 +1,3 @@
-//  Retrieve todo from local storage or initialize an empty array
-
 let todo = JSON.parse(localStorage.getItem("todo")) || [];
 const todoInput = document.getElementById("todoInput");
 const todoList = document.getElementById("todoList");
@@ -7,8 +5,8 @@ const todoCount = document.getElementById("todoCount");
 const addButton = document.querySelector(".btn");
 const deleteButton = document.getElementById("deleteButton");
 
-//  Initialize
-
+// Initialize
+displayTasks();
 document.addEventListener("DOMContentLoaded", function () {
   addButton.addEventListener("click", addTask);
   todoInput.addEventListener("keydown", function (event) {
@@ -23,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function addTask() {
   const newTask = todoInput.value.trim();
   if (newTask !== "") {
-    todo.push({ text: newTask, disabled: false });
+    todo.push({ index: todo.length + 1, text: newTask, disabled: false });
     saveToLocalStorage();
     todoInput.value = "";
     displayTasks();
@@ -31,7 +29,9 @@ function addTask() {
 }
 
 function deleteAllTasks() {
-  console.log("test");
+  todo = [];
+  saveToLocalStorage();
+  displayTasks();
 }
 
 function displayTasks() {
@@ -43,11 +43,10 @@ function displayTasks() {
         <input type="checkbox" class="todo-checkbox" id="input-${index}" ${
       item.disabled ? "checked" : ""
     }>
-    <p id="todo-${index}" class="${
-      item.disabled ? "disabled" : ""
-    }" onclick="editTask(${index})">
+    <p id="todo-${index}" class="${item.disabled ? "disabled" : ""}">
       ${item.text}
     </p>
+    <button class="delete_btn" onClick="deleteTask(${index})">Delete</button>
     </div>
     `;
     p.querySelector(".todo-checkbox").addEventListener("change", () =>
@@ -58,34 +57,15 @@ function displayTasks() {
   todoCount.textContent = todo.length;
 }
 
-function editTask(index) {
-  const todoItem = document.getElementById(`todo-${index}`);
-  const existingText = todo[index].text;
-  const inputElement = document.createElement("input");
-
-  inputElement.value = existingText;
-  todoItem.replaceWith(inputElement);
-  inputElement.focus();
-
-  inputElement.addEventListener("blur", function () {
-    const updatedText = inputElement.value.trim();
-
-    if (updatedText) {
-      todo[index].text = updatedText;
-      saveToLocalStorage();
-    }
-    displayTasks();
-  });
-}
-
 function toggleTask(index) {
   todo[index].disabled = !todo[index].disabled;
   saveToLocalStorage();
   displayTasks();
 }
 
-function deleteAllTasks() {
-  todo = [];
+function deleteTask(index) {
+  todo.splice(index, 1);
+  todo = todo.map((task, i) => ({ ...task, index: i + 1 }));
   saveToLocalStorage();
   displayTasks();
 }
