@@ -5,7 +5,7 @@
     #33483a 100%
   );
   --dark: #001747;
-  --grey: #b1b8cb;
+  --grey: #171719;
   --grey-border: rgba(210, 210, 210, 0.75);
   --grey-light: #eeeeee;
   --grey-dark: #405175;
@@ -33,6 +33,7 @@ body {
   border: none;
   position: absolute;
   right: 0.5rem;
+  cursor: pointer;
   bottom: 0.5rem;
 }
 
@@ -84,6 +85,7 @@ input[type="text"]::placeholder {
 }
 
 .todo-container {
+  width: 100%;
   display: flex;
   gap: 1rem;
 }
@@ -102,6 +104,7 @@ li {
 }
 
 #todoList p {
+  width: 100%;
   display: flex;
   gap: 1rem;
   color: var(--dark);
@@ -158,12 +161,13 @@ input[type="checkbox"]:checked::before {
   align-self: center;
 }
 
-.counter-container button {
+/* .counter-container button {
   border: none;
   background-color: transparent;
   color: var(--grey);
+  cursor: pointer;
   font-size: 1rem;
-}
+} */
 
 .footer {
   display: flex;
@@ -198,4 +202,22 @@ input[type="checkbox"]:checked::before {
 
 .scroll::-webkit-scrollbar-track {
   display: none;
+}
+.delete_btn {
+  color: var(--white);
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem;
+  background-color: var(--blue);
+  border: none;
+  cursor: pointer;
+}
+#deleteButton {
+  color: var(--white);
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem;
+  background-color: var(--blue);
+  border: none;
+  cursor: pointer;
 }
